@@ -2,25 +2,27 @@ piVersion: v1
 kind: Service
 metadata:
   labels:
-    run: KeplerVMSNginx
-  name: KeplerVMSNginx
+    run: kepler-vms-nginx
+  name: kepler-vms-nginx
   namespace: default
 spec:
   clusterIP: 10.108.201.144
   externalTrafficPolicy: Cluster
   ports:
-  - nodePort: 38080
+  - nodePort: 30453
+    name: http
     port: 8080
     protocol: TCP
     targetPort: 8080
     type: NodePort
   - nodePort: 31935
+    name: rtmp
     port: 1935
     protocol: TCP
     targetPort: 1935
     type: NodePort
   selector:
-    run: KeplerVMSNginx
+    run: kepler-vms-nginx
   sessionAffinity: None
   type: NodePort
 status:

@@ -2,18 +2,18 @@ apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   labels:
-    run: KeplerVMSNginx
-  name: KeplerVMSNginx
+    run: kepler-vms-nginx
+  name: kepler-vms-nginx
   namespace: default
   resourceVersion: "49623"
-  selfLink: /apis/extensions/v1beta1/namespaces/default/deployments/KeplerVMSNginx
+  selfLink: /apis/extensions/v1beta1/namespaces/default/deployments/kepler-vms-nginx
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      run: KeplerVMSNginx
+      run: kepler-vms-nginx
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -22,7 +22,7 @@ spec:
   template:
     metadata:
       labels:
-        run: KeplerVMSNginx
+        run: kepler-vms-nginx
     spec:
       volumes:
       - name: vms-data-volume
@@ -51,7 +51,7 @@ spec:
             name: vms-data-volume
           - mountPath: "/home/nginx/logs"
             name: vms-logs-volume
-        name: KeplerVMSNginx
+        name: kepler-vms-nginx
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File

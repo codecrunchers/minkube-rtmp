@@ -15,12 +15,12 @@ initimage:
   pullPolicy: Never
 
 service:
-  name: KeplerVMSNginx
+  name: kepler-vms-nginx
   type: NodePort
   externalPort: 8080
   internalPort: 8080
   selector:
-    run: KeplerVMSNginx
+    run: kepler-vms-nginx
 ingress:
   enabled: false
   path: /
