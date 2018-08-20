@@ -31,18 +31,6 @@ spec:
       - name: vms-logs-volume
         persistentVolumeClaim:
           claimName: task-nginx-logs-claim
-      initcontainers:
-      - image: busybox
-        tag: 0.1
-        name: inittest
-        imagePullPolicy: Never
-        volumeMounts:
-          - mountPath: "/home/nginx/data"
-            name: vms-data-volume
-          - mountPath: "/home/nginx/logs"
-            name: vms-logs-volume
-        command: ["/bin/sh"]
-        args: ["-c","echo","DATA",">","/home/nginx/data/cameras.txt"]
       containers:
       - image: kepler/nginx:0.1
         imagePullPolicy: Never
