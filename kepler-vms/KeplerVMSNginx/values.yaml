@@ -1,0 +1,37 @@
+# Default values for helm.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: kepler/nginx
+  tag: 0.1
+  pullPolicy: Never
+
+initimage:
+  repository: busybox
+  tag: lastest
+  pullPolicy: Never
+
+service:
+  name: KeplerVMSNginx
+  type: NodePort
+  externalPort: 8080
+  internalPort: 8080
+  selector:
+    run: KeplerVMSNginx
+ingress:
+  enabled: false
+  path: /
+  hosts:
+    - media-server.local
+  tls: []
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

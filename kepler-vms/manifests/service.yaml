@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: 2018-08-19T23:05:28Z
+  labels:
+    run: kepler-vms-cli
+  name: kepler-vms-cli
+  namespace: default
+  resourceVersion: "45923"
+  selfLink: /api/v1/namespaces/default/services/kepler-vms-cli
+  uid: 5d58c39f-a404-11e8-a12b-080027b15a4b
+spec:
+  clusterIP: 10.110.247.129
+  externalTrafficPolicy: Cluster
+  ports:
+  - nodePort: 30063
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    run: kepler-vms
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}

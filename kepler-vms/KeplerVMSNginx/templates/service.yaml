@@ -1,0 +1,28 @@
+piVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: KeplerVMSNginx
+  name: KeplerVMSNginx
+  namespace: default
+spec:
+  clusterIP: 10.108.201.144
+  externalTrafficPolicy: Cluster
+  ports:
+  - nodePort: 38080
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+    type: NodePort
+  - nodePort: 31935
+    port: 1935
+    protocol: TCP
+    targetPort: 1935
+    type: NodePort
+  selector:
+    run: KeplerVMSNginx
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}
+

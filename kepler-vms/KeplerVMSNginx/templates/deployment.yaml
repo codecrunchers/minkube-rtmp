@@ -1,0 +1,65 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    run: KeplerVMSNginx
+  name: KeplerVMSNginx
+  namespace: default
+  resourceVersion: "49623"
+  selfLink: /apis/extensions/v1beta1/namespaces/default/deployments/KeplerVMSNginx
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      run: KeplerVMSNginx
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        run: KeplerVMSNginx
+    spec:
+      volumes:
+      - name: vms-data-volume
+        persistentVolumeClaim:
+          claimName: task-nginx-data-claim
+      - name: vms-logs-volume
+        persistentVolumeClaim:
+          claimName: task-nginx-logs-claim
+      initcontainers:
+      - image: busybox
+        tag: 0.1
+        name: inittest
+        imagePullPolicy: Never
+        volumeMounts:
+          - mountPath: "/home/nginx/data"
+            name: vms-data-volume
+          - mountPath: "/home/nginx/logs"
+            name: vms-logs-volume
+        command: ["/bin/sh"]
+        args: ["-c","echo","DATA",">","/home/nginx/data/cameras.txt"]
+      containers:
+      - image: kepler/nginx:0.1
+        imagePullPolicy: Never
+        volumeMounts:
+          - mountPath: "/home/nginx/data"
+            name: vms-data-volume
+          - mountPath: "/home/nginx/logs"
+            name: vms-logs-volume
+        name: KeplerVMSNginx
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+#        command: ["/bin/sh"]
+#        args: ["-c","ls /home/nginx/logs/"]
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status: {}
